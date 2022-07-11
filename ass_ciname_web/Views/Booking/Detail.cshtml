@@ -1,0 +1,46 @@
+﻿@model ass_ciname_web.Models.Booking
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h1>Detail</h1>
+
+<form method="post" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+    @{
+        int count = 0;
+    }
+    @for (var i = 0; i < ViewBag.row; i++)
+    {
+        <div class="">
+            @for (var j = 0; j < ViewBag.col; j++)
+            {
+                if (ViewBag.result[count] == '1')
+                {
+                    <input checked type="checkbox" name="booking" disabled />
+                }
+                else
+                {
+                    <input type="checkbox" name="booking" disabled />
+                }
+                count++;
+            }
+        </div>
+    }
+</form>
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" disabled />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Amount" class="control-label"></label>
+        <input asp-for="Amount" class="form-control" disabled />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+    <div>
+        <a asp-action="Index" asp-route-id="@ViewBag.booking.ShowId">Back to List</a>
+    </div>
+</form>

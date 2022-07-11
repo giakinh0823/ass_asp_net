@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ass_ciname_web", "ass_ciname_web\ass_ciname_web.csproj", "{B3FF806F-2289-493A-95D3-4F6C9EBAF2C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3FF806F-2289-493A-95D3-4F6C9EBAF2C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3FF806F-2289-493A-95D3-4F6C9EBAF2C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3FF806F-2289-493A-95D3-4F6C9EBAF2C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3FF806F-2289-493A-95D3-4F6C9EBAF2C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C87F0042-9E0D-4AA3-955E-E8CC0FC99A2B}
+	EndGlobalSection
+EndGlobal

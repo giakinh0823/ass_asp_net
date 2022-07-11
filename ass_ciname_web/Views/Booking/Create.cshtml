@@ -1,0 +1,65 @@
+﻿@model ass_ciname_web.Models.Booking
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<form method="POST">
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+        @{
+            int count = 0;
+        }
+        @for (var i = 0; i < ViewBag.row; i++)
+        {
+            <div class="">
+                @for (var j = 0; j < ViewBag.col; j++)
+                {
+                    if (ViewBag.result[count] == '1')
+                    {
+                        <input type="hidden" name="seats" value="0" id="seat-item-@count" />
+                        <input type="checkbox" onchange="onChangeInput(@count, this)" disabled checked/>
+                    }
+                    else
+                    {
+                        <input type="hidden" name="seats" value="0" id="seat-item-@count" />
+                        <input type="checkbox" onchange="onChangeInput(@count, this)" />
+                    }
+
+                    count++;
+                }
+            </div>
+        }
+    </div>
+
+    <div class="text-danger">@ViewBag.error</div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Amount" class="control-label"></label>
+        <input asp-for="Amount" class="form-control" readonly />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+    <div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+        <a asp-action="Index" asp-route-id="@ViewBag.show.ShowId">Back to List</a>
+    </div>
+</form>
+<script>
+    function onChangeInput(id, element){
+        document.getElementById(`seat-item-${id}`).value = element.checked ? 1: 0;
+        const bookings = document.querySelectorAll("input[name='seats']");
+        let count = 0;
+        for(let i = 0; i<bookings.length; i++){
+           if(bookings[i].value==1){
+               count++;
+           }
+        }
+        document.getElementById('Amount').value = count * @ViewBag.show.Price;
+    }
+</script>

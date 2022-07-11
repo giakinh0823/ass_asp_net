@@ -1,0 +1,76 @@
+﻿@model ass_ciname_web.Models.Booking
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Booking</h1>
+
+<form method="post" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+    @{
+        int count = 0;
+    }
+    @for (var i = 0; i < ViewBag.Show.Room.NumberRows; i++)
+    {
+        <div class="">
+            @for (var j = 0; j < ViewBag.Show.Room.NumberCols; j++)
+            {
+                if (ViewBag.result[count] == '1')
+                {
+                    <input checked type="checkbox" name="booking" disabled />
+                }
+                else
+                {
+                    <input type="checkbox" name="booking" disabled />
+                }
+                count++;
+            }
+        </div>
+    }
+</form>
+<p class="text-right">
+    <a href="/Booking/Index/@ViewBag.Show.ShowId/Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Booking item in ViewBag.bookings)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <p style="overflow-wrap: break-word; max-width: 280px">
+                        @Html.DisplayFor(modelItem => item.SeatStatus)
+                    </p>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    <a asp-action="Detail" asp-route-id="@item.BookingId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.BookingId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index" asp-controller="Shows">Back to List</a>
+</div>
+
+
