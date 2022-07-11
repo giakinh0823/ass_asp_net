@@ -1,4 +1,9 @@
-﻿@model ass_ciname_web.Models.Show
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string user = HttpContextAccessor.HttpContext.Session.GetString("user");
+}
+@model ass_ciname_web.Models.Show
 @{
     ViewData["Title"] = "Index";
 }
@@ -22,9 +27,12 @@
         <input type="submit" value="Search" class="btn btn-primary" />
     </div>
 </form>
-<p class="text-right">
+ @if (user != null && user != "")
+{
+ <p class="text-right">
     <a asp-action="Create">Create New</a>
-</p>
+</p>  
+}
 <table class="table">
     <thead>
         <tr>
@@ -50,33 +58,39 @@
         </tr>
     </thead>
     <tbody>
-@foreach (Show item in ViewBag.shows) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Film.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShowDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slot)
-            </td>
-            <td>
-                <a asp-controller="Booking" asp-action="Index" asp-route-id="@item.ShowId">Booking</a> |
-                <a asp-action="Edit" asp-route-id="@item.ShowId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ShowId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ShowId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (Show item in ViewBag.shows)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Film.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShowDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slot)
+                </td>
+                <td>
+                    <a asp-controller="Booking" asp-action="Index" asp-route-id="@item.ShowId">Booking</a> |
+                    <a asp-action="Details" asp-route-id="@item.ShowId">Details</a> 
+                    @if (user != null && user != "")
+                    {
+                        <span>
+                            |<a asp-action="Edit" asp-route-id="@item.ShowId">Edit</a>
+                            |<a asp-action="Delete" asp-route-id="@item.ShowId">Delete</a>
+                        </span>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

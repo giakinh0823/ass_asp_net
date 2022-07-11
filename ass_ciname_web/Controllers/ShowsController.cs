@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ass_ciname_web.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace ass_ciname_web.Controllers
 {
@@ -58,6 +59,12 @@ namespace ass_ciname_web.Controllers
 
         public IActionResult Create()
         {
+            var user = HttpContext.Session.GetString("user");
+            if (user == null || user.Equals(""))
+            {
+                return Redirect("~/Auth/Login");
+            }
+
             return View();
         }
 
@@ -66,6 +73,12 @@ namespace ass_ciname_web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ShowId,RoomId,FilmId,ShowDate,Price,Status,Slot")] Show show)
         {
+            var user = HttpContext.Session.GetString("user");
+            if (user == null || user.Equals(""))
+            {
+                return Redirect("~/Auth/Login");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(show);
@@ -77,6 +90,12 @@ namespace ass_ciname_web.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
+            var user = HttpContext.Session.GetString("user");
+            if (user == null || user.Equals(""))
+            {
+                return Redirect("~/Auth/Login");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -95,6 +114,11 @@ namespace ass_ciname_web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ShowId,RoomId,FilmId,ShowDate,Price,Status,Slot")] Show show)
         {
+            var user = HttpContext.Session.GetString("user");
+            if (user == null || user.Equals(""))
+            {
+                return Redirect("~/Auth/Login");
+            }
             if (id != show.ShowId)
             {
                 return NotFound();
@@ -125,6 +149,11 @@ namespace ass_ciname_web.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
+            var user = HttpContext.Session.GetString("user");
+            if (user == null || user.Equals(""))
+            {
+                return Redirect("~/Auth/Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -144,6 +173,11 @@ namespace ass_ciname_web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var user = HttpContext.Session.GetString("user");
+            if (user == null || user.Equals(""))
+            {
+                return Redirect("~/Auth/Login");
+            }
             var show = await _context.Shows.FindAsync(id);
             _context.Shows.Remove(show);
             await _context.SaveChangesAsync();

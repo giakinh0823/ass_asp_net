@@ -155,7 +155,6 @@ namespace ass_ciname_web.Controllers
                 return BadRequest();
             }
 
-         
 
             string seatStatus = "";
             int count = 0;
@@ -167,14 +166,40 @@ namespace ass_ciname_web.Controllers
                 }
                 seatStatus+=seats[i];
             }
-            ViewBag.col = col;
-            ViewBag.row = row;
-            ViewBag.Show = show;
+          
             Booking booking = new Booking();
             booking.SeatStatus = seatStatus;
             booking.ShowId = show.ShowId;
             booking.Amount = count * show.Price;
             booking.Name = name;
+            if (count == 0)
+            {
+                char[] charArray = new char[col * row];
+                Array.Fill(charArray, '0');
+
+                var cinameContext = _context
+                            .Bookings.Where(booking => booking.ShowId == id)
+                            .Include(show => show.Show);
+                var bookings = await cinameContext.ToListAsync();
+                foreach (Booking item in bookings)
+                {
+                    for (int i = 0; i < item.SeatStatus.Length; i++)
+                    {
+                        if (item.SeatStatus[i] == '1')
+                        {
+                            charArray[i] = '1';
+                        }
+                    }
+                }
+                ViewBag.bookings = bookings;
+                ViewBag.result = charArray;
+                ViewBag.col = col;
+                ViewBag.row = row;
+                ViewBag.Show = show;
+
+                ViewBag.error = "Please choose seat!";
+                return View(booking);
+            }
             _context.Bookings.Add(booking);
             _context.SaveChanges();
             return Redirect("~/Booking/Index/"+show.ShowId);
